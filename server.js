@@ -84,6 +84,17 @@ app.post('/update',async(req,res)=>{
 })
 
 
+app.delete('/delete/:id',async(req,res)=>{
+    try{
+        const response=db.collection("user").doc(req.params.id).delete();
+        res.send(response);
+    }catch(error)
+    {
+        res.send(error);
+    }
+})
+
+
 
 
 
