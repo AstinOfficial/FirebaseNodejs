@@ -7,6 +7,12 @@ var admin = require("firebase-admin");
 
 var serviceAccount = require("./key.json");
 
+app.use(express.json());
+
+
+app.use(express.urlencoded({extended:true}));
+
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
@@ -14,10 +20,29 @@ admin.initializeApp({
 
 const db=admin.firestore();
 
-app.use(express.json());
+
+app.post('/create',async(req,res)=>{
+    try{
+        const id=req.body.email;
+        const userJson={
+            email:req.body.email,
+            firstname:req.body.firstName,
+            lastname:req.body.lastName
+        };
+        const response=db.collection("user").doc(id).set(userJson);
+        res.send(response);
+    } catch(error)
+    {
+        res.send(error);
+    }
+})
 
 
-app.use(express.urlencoded({extended:true}));
+
+
+
+
+
 
 const PORT = process.env.PORT || 8080;
 
