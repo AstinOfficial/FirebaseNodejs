@@ -69,6 +69,23 @@ app.get('/read/:id',async(req,res)=>{
 
 
 
+app.post('/update',async(req,res)=>{
+    try{
+        const id=req.body.id;
+        const newFirstname="Thanku "
+        const userRef=db.collection("user").doc(id).update({
+            firstName:newFirstname
+        });
+        res.send(response);
+    }catch(error)
+    {
+        res.send(error);
+    }
+})
+
+
+
+
 
 
 
