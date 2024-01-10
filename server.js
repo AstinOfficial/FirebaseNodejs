@@ -40,6 +40,36 @@ app.post('/create',async(req,res)=>{
 
 
 
+app.get('/read/all/',async(req,res)=>{
+    try{
+        const userRef=db.collection("user");
+        const response=await userRef.get();
+        let responseArr=[]; //response we get in array ee varuna responseil avisham ilatha kure und
+        response.forEach(doc=>{
+            responseArr.push(doc.data());
+        });
+
+        res.send(responseArr);
+    }catch(responseArr)
+    {
+        res.send(error);
+    }
+})
+
+app.get('/read/:id',async(req,res)=>{
+    try{
+        const userRef=db.collection("user").doc(req.params.id);
+        const response=await userRef.get();
+        res.send(response.data());
+    }catch(error)
+    {
+        res.send(error);
+    }
+})
+
+
+
+
 
 
 
